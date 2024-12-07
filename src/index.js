@@ -6,7 +6,7 @@ import App from './App';
 
 // Initialize Google Tag Manager
 const tagManagerArgs = {
-    gtmId: 'GTM-NCCBX5MK', // Replace with your GTM ID
+    gtmId: 'GTM-K45LX67B', // Replace with your GTM ID
 };
 TagManager.initialize(tagManagerArgs);
 
