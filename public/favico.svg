@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <!-- Background shape (transparent) -->
+    <rect width="32" height="32" fill="transparent"/>
+
+    <!-- Left side of V (blue) -->
+    <path d="M4 4 L16 28 L16 16 Z" fill="#00A3FF"/>
+
+    <!-- Right side of V (yellow) -->
+    <path d="M28 4 L16 28 L16 16 Z" fill="#FFB800"/>
+
+    <!-- Lightning bolt (white) -->
+    <path d="M14 4 L18 4 L16 10 L19 10 L13 28 L15 16 L12 16 Z" fill="white"/>
+</svg>
