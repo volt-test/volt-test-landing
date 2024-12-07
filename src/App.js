@@ -166,6 +166,7 @@ function InvolvementCard({ title, items }) {
               <li key={index} className="flex items-center text-gray-700">
             <span className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center mr-3 text-blue-600">
               {item.icon}
+
             </span>
                 {item.text}
               </li>
