@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Rocket, Code, Activity, Mail, Star, Zap } from 'lucide-react';
+import { Github, Code, Activity, Zap, Server, Shield } from 'lucide-react';
 import LogoSmall from './img/logo-180-60.svg';
 import LogoLarge from './img/logo-400.svg';
 
@@ -50,11 +50,9 @@ export default function LandingPage() {
                         </p>
                         <div className="flex justify-center space-x-4">
                             <a href="https://github.com/volt-test/php-sdk" className="flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all">
-                                <Star className="w-5 h-5 mr-2" />
                                 Star on GitHub
                             </a>
                             <a href="https://php.volt-test.com" className="flex items-center px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors border border-gray-700">
-                                <Mail className="w-5 h-5 mr-2" />
                                 Read PHP SDK Docs
                             </a>
                         </div>
@@ -62,31 +60,54 @@ export default function LandingPage() {
                 </div>
             </div>
 
-            {/* Key Features */}
+            {/* PHP SDK Key Features */}
             <div className="py-20 bg-gray-800/50" id="features">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-3 gap-8">
                         <FeatureCard
                             icon={<Activity className="w-6 h-6 text-blue-400" />}
-                            title="Scale Infinitely"
-                            description="From 1K to 10M concurrent users, our architecture grows with your needs"
+                            title="Performance Testing"
+                            description="Concurrent virtual user simulation and real-time metrics collection."
                             gradient="from-blue-500/20 to-blue-600/20"
                         />
                         <FeatureCard
                             icon={<Code className="w-6 h-6 text-yellow-400" />}
-                            title="Developer First"
-                            description="Built for developers with clean APIs, comprehensive docs, and SDK support"
+                            title="HTTP(S) Testing"
+                            description="All standard HTTP methods, response validation, and session management."
                             gradient="from-yellow-500/20 to-yellow-600/20"
                         />
                         <FeatureCard
-                            icon={<Rocket className="w-6 h-6 text-blue-400" />}
-                            title="Real-time Analytics"
-                            description="Get instant insights with comprehensive metrics and analysis"
-                            gradient="from-blue-500/20 to-blue-600/20"
+                            icon={<Code className="w-6 h-6 text-green-400" />}
+                            title="Data Management"
+                            description="CSV data source support and dynamic data extraction and reuse."
+                            gradient="from-green-500/20 to-green-600/20"
+                        />
+                        <FeatureCard
+                            icon={<Code className="w-6 h-6 text-red-400" />}
+                            title="Result Analysis"
+                            description="Success/failure rates and response time statistics (p90, p95, p99)."
+                            gradient="from-red-500/20 to-red-600/20"
+                        />
+                        <FeatureCard
+                            icon={<Server className="w-6 h-6 text-indigo-400" />}
+                            title="Scalable Execution (Soon)"
+                            description="Distributed test execution for high scalability."
+                            gradient="from-indigo-500/20 to-indigo-600/20"
+                        />
+                        <FeatureCard
+                            icon={<Shield className="w-6 h-6 text-teal-400" />}
+                            title="Security Compliance"
+                            description="Built-in security measures for safe load testing."
+                            gradient="from-teal-500/20 to-teal-600/20"
                         />
                     </div>
                 </div>
             </div>
+
+            {/* Footer */}
+            <footer className="py-8 bg-gray-900 text-center text-gray-400">
+                <p>&copy; 2025 Volt-Test. All rights reserved.</p>
+            </footer>
         </div>
     );
 }
