@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Rocket, Code, Activity, Mail, Star, Zap, ChevronRight } from 'lucide-react';
+import { Github, Rocket, Code, Activity, Mail, Star, Zap } from 'lucide-react';
 import LogoSmall from './img/logo-180-60.svg';
 import LogoLarge from './img/logo-400.svg';
 
