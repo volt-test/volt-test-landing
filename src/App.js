@@ -19,7 +19,7 @@ export default function LandingPage() {
                         </div>
                         <div className="flex items-center space-x-8">
                             <a href="#features" className="text-gray-300 hover:text-white">Features</a>
-                            <a href="https://php.volt-test.com/docs" className="text-gray-300 hover:text-white">PHP SDK Docs</a>
+                            <a href="https://php.volt-test.com" className="text-gray-300 hover:text-white">PHP SDK Docs</a>
                             <a href="https://github.com/volt-test/php-sdk" className="flex items-center px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
                                 <Github className="w-4 h-4 mr-2" />
                                 GitHub
