@@ -15,7 +15,7 @@ export default function LandingPage() {
                     <span className="text-blue-500">Performance, Stress, Load Testing <br />Has been Recharged.</span>
                 </h1>
                 <p className="text-lg md:text-2xl text-blue-700 max-w-2xl mx-auto mb-8">
-                    Write, run, and automate performance tests in PHP with ease. Powered by a blazing-fast Go engine. No context-switching, just code.
+                    Write, run, and automate performance tests in PHP. <br /> Powered by a blazing-fast Go engine.<br/> No context-switching, just code.
                 </p>
                 <div className="flex justify-center gap-4 mb-8">
                     <a href="https://php.volt-test.com/docs/getting-started" target="_blank" rel="noopener noreferrer"
