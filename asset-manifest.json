@@ -1,15 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.19348a40.css",
-    "main.js": "/static/js/main.f510e9d3.js",
-    "static/media/logo-400.svg": "/static/media/logo-400.b4605887812d0ca42e9734464453991d.svg",
-    "static/media/logo-180-60.svg": "/static/media/logo-180-60.ad9756ec90739bb72204449ef84ee118.svg",
+    "main.css": "/static/css/main.03653ff9.css",
+    "main.js": "/static/js/main.cf700eac.js",
+    "static/media/volt-test-logo.png": "/static/media/volt-test-logo.6fb0fdc099e045af6133.png",
     "index.html": "/index.html",
-    "main.19348a40.css.map": "/static/css/main.19348a40.css.map",
-    "main.f510e9d3.js.map": "/static/js/main.f510e9d3.js.map"
+    "main.03653ff9.css.map": "/static/css/main.03653ff9.css.map",
+    "main.cf700eac.js.map": "/static/js/main.cf700eac.js.map"
   },
   "entrypoints": [
-    "static/css/main.19348a40.css",
-    "static/js/main.f510e9d3.js"
+    "static/css/main.03653ff9.css",
+    "static/js/main.cf700eac.js"
   ]
 }
