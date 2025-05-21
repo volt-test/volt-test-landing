@@ -94,10 +94,10 @@ $result = $voltTest->run(true);`}</pre>
             {/* Community & Footer */}
             <footer className="py-10 bg-white text-center border-t border-blue-100">
                 <div className="flex justify-center gap-6 mb-4">
-                    <a href="https://php.volt-test.com" className="hover:underline text-blue-500">Docs</a>
-                    <a href="https://github.com/volt-test/php-sdk" className="hover:underline text-blue-500">GitHub</a>
-                    <a href="https://x.com/vt_developers" className="hover:underline text-blue-500">X(twitter)</a>
-                    <a href="https://discord.com/invite/BvQD6bptaD" className="hover:underline text-blue-500">Discord</a>
+                    <a href="https://php.volt-test.com" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">Docs</a>
+                    <a href="https://github.com/volt-test/php-sdk" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">GitHub</a>
+                    <a href="https://x.com/vt_developers" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">X(twitter)</a>
+                    <a href="https://discord.com/invite/BvQD6bptaD" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">Discord</a>
                 </div>
                 <p className="text-sm text-blue-400">
                     &copy; {new Date().getFullYear()} Volt-Test. Built by developers for developers.
