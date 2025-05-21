@@ -100,7 +100,7 @@ $result = $voltTest->run(true);`}</pre>
                     <a href="https://discord.com/invite/BvQD6bptaD" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">Discord</a>
                 </div>
                 <p className="text-sm text-blue-400">
-                    &copy; {new Date().getFullYear()} Volt-Test. Built by developers for developers.
+                    &copy; {new Date().getFullYear()} VoltTest. Built by developers for developers.
                 </p>
             </footer>
         </main>
