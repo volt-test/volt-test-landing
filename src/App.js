@@ -96,7 +96,7 @@ $result = $voltTest->run(true);`}</pre>
                 <div className="flex justify-center gap-6 mb-4">
                     <a href="https://php.volt-test.com" className="hover:underline text-blue-500">Docs</a>
                     <a href="https://github.com/volt-test/php-sdk" className="hover:underline text-blue-500">GitHub</a>
-                    <a href="https://x.com/vt_developers" className="hover:underline text-blue-500">Twitter</a>
+                    <a href="https://x.com/vt_developers" className="hover:underline text-blue-500">X(twitter)</a>
                     <a href="https://discord.com/invite/BvQD6bptaD" className="hover:underline text-blue-500">Discord</a>
                 </div>
                 <p className="text-sm text-blue-400">
