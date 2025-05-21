@@ -1,125 +1,118 @@
-import React from 'react';
-import { Github, Code, Activity, Zap, Server, Shield } from 'lucide-react';
-import LogoSmall from './img/logo-180-60.svg';
-import LogoLarge from './img/logo-400.svg';
+// Volt-Test Landing Page with Blue & White Theme
+import logo from './img/volt-test-logo.png';
+import { Github, BookOpen, Zap } from 'lucide-react';
 
 export default function LandingPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
-            {/* Navigation */}
-            <nav className="fixed w-full bg-gray-900/90 backdrop-blur-sm border-b border-gray-800 z-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        <div className="flex items-center space-x-3">
-                            <img
-                                src={LogoSmall}
-                                alt="Volt-Test Logo"
-                                className="h-8"
-                            />
-                        </div>
-                        <div className="flex items-center space-x-8">
-                            <a href="#features" className="text-gray-300 hover:text-white">Features</a>
-                            <a href="https://php.volt-test.com" className="text-gray-300 hover:text-white">PHP SDK Docs</a>
-                            <a href="https://github.com/volt-test/php-sdk" className="flex items-center px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors">
-                                <Github className="w-4 h-4 mr-2" />
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
+        <main className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-white text-blue-900 font-sans">
+            {/* Hero */}
+            <section className="pt-24 pb-16 px-4 text-center">
+                <div className="flex justify-center mb-4">
+                    <img src={logo} alt="Volt-Test Logo" className="h-14 rounded-lg" />
                 </div>
-            </nav>
-
-            {/* Hero Section */}
-            <div className="pt-32 pb-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center">
-                        <img
-                            src={LogoLarge}
-                            alt="Volt-Test Logo Large"
-                            className="mx-auto mb-12 w-64"
-                        />
-                        <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-500/10 text-blue-400 mb-8">
-                            <Zap className="w-4 h-4 mr-2" />
-                            PHP SDK Now Available!
-                        </div>
-                        <h1 className="text-6xl font-bold text-white mb-6 leading-tight">
-                            Scale Your Performance<br />Testing With Confidence
-                        </h1>
-                        <p className="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">
-                            Now with a PHP SDK! Integrate Volt-Test seamlessly into your PHP applications.
-                        </p>
-                        <div className="flex justify-center space-x-4">
-                            <a href="https://github.com/volt-test/php-sdk" className="flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all">
-                                Star on GitHub
-                            </a>
-                            <a href="https://php.volt-test.com" className="flex items-center px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors border border-gray-700">
-                                Read PHP SDK Docs
-                            </a>
-                        </div>
-                    </div>
+                <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                    VoltTest for Developers<br />
+                    <span className="text-blue-500">Performance, Stress, Load Testing <br />Has been Recharged.</span>
+                </h1>
+                <p className="text-lg md:text-2xl text-blue-700 max-w-2xl mx-auto mb-8">
+                    Write, run, and automate performance tests in PHP with ease. Powered by a blazing-fast Go engine. No context-switching, just code.
+                </p>
+                <div className="flex justify-center gap-4 mb-8">
+                    <a href="https://php.volt-test.com/docs/getting-started" target="_blank" rel="noopener noreferrer"
+                       className="bg-blue-500 text-white px-6 py-3 rounded-xl text-lg font-bold shadow hover:bg-blue-400 transition">
+                        Get Started
+                    </a>
+                    <a href="https://github.com/volt-test/php-sdk" target="_blank" rel="noopener noreferrer"
+                       className="border border-blue-400 text-blue-500 px-6 py-3 rounded-xl text-lg font-bold hover:bg-blue-500 hover:text-white transition flex items-center gap-2">
+                        <Github className="h-5 w-5" /> GitHub
+                    </a>
                 </div>
-            </div>
-
-            {/* PHP SDK Key Features */}
-            <div className="py-20 bg-gray-800/50" id="features">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <FeatureCard
-                            icon={<Activity className="w-6 h-6 text-blue-400" />}
-                            title="Performance Testing"
-                            description="Concurrent virtual user simulation and real-time metrics collection."
-                            gradient="from-blue-500/20 to-blue-600/20"
-                        />
-                        <FeatureCard
-                            icon={<Code className="w-6 h-6 text-yellow-400" />}
-                            title="HTTP(S) Testing"
-                            description="All standard HTTP methods, response validation, and session management."
-                            gradient="from-yellow-500/20 to-yellow-600/20"
-                        />
-                        <FeatureCard
-                            icon={<Code className="w-6 h-6 text-green-400" />}
-                            title="Data Management"
-                            description="CSV data source support and dynamic data extraction and reuse."
-                            gradient="from-green-500/20 to-green-600/20"
-                        />
-                        <FeatureCard
-                            icon={<Code className="w-6 h-6 text-red-400" />}
-                            title="Result Analysis"
-                            description="Success/failure rates and response time statistics (p90, p95, p99)."
-                            gradient="from-red-500/20 to-red-600/20"
-                        />
-                        <FeatureCard
-                            icon={<Server className="w-6 h-6 text-indigo-400" />}
-                            title="Scalable Execution (Soon)"
-                            description="Distributed test execution for high scalability."
-                            gradient="from-indigo-500/20 to-indigo-600/20"
-                        />
-                        <FeatureCard
-                            icon={<Shield className="w-6 h-6 text-teal-400" />}
-                            title="Security Compliance"
-                            description="Built-in security measures for safe load testing."
-                            gradient="from-teal-500/20 to-teal-600/20"
-                        />
-                    </div>
+                <div className="rounded-2xl bg-white border border-blue-100 shadow-xl w-full max-w-2xl mx-auto p-6 mt-4">
+          <pre className="text-left text-sm md:text-base text-blue-800 bg-blue-50 rounded-xl p-4 overflow-x-auto">
+{`$voltTest = (new VoltTest('Name of Your test'))
+->setVirtualUsers(10);
+$scenario = $voltTest->scenario('Basic Scenario');
+$scenario->step('Register')
+    ->get('https://your-app.test')
+    ->header('Content-Type', 'text/html');
+$result = $voltTest->run(true);`}
+          </pre>
                 </div>
-            </div>
+            </section>
 
-            {/* Footer */}
-            <footer className="py-8 bg-gray-900 text-center text-gray-400">
-                <p>&copy; 2025 Volt-Test. All rights reserved.</p>
+            {/* Features */}
+            <section className="py-16 bg-blue-50">
+                <div className="max-w-5xl mx-auto px-4 grid md:grid-cols-3 gap-10">
+                    <Feature
+                        icon={<Zap className="h-8 w-8 text-blue-500" />}
+                        title="Native PHP SDK"
+                        description="Write tests in PHP. No extra scripts. Works with Laravel, Symfony, any PHP app."
+                    />
+                    <Feature
+                        icon={<BookOpen className="h-8 w-8 text-blue-500" />}
+                        title="Easy & Fast"
+                        description="Composer install, write a test, and go! Instant results—locally or in CI."
+                    />
+                    <Feature
+                        icon={<Github className="h-8 w-8 text-blue-500" />}
+                        title="Open Source"
+                        description="MIT licensed. Built for the community. Integrates easily into your workflow."
+                    />
+                </div>
+            </section>
+
+            {/* Getting Started */}
+            <section className="py-20 px-4 text-center max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">How to Start?</h2>
+                <p className="text-lg text-blue-700 mb-8">
+                    Install, write your first test, and run it. That's all.
+                </p>
+                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-left shadow-xl mb-4">
+                    <p className="mb-2 font-semibold text-blue-500">1. Install via Composer:</p>
+                    <pre className="mb-4 text-blue-800 bg-white p-2 rounded overflow-x-auto">{`composer require volt-test/php-sdk --dev`}</pre>
+                    <p className="mb-2 font-semibold text-blue-500">2. Write a test: test.php</p>
+                    <pre className="mb-4 text-blue-800 bg-white p-2 rounded overflow-x-auto">{`$voltTest = (new VoltTest('Name of Your test'))
+->setVirtualUsers(10);
+$scenario = $voltTest->scenario('Basic Scenario');
+$scenario->step('Register')
+    ->get('https://your-app.test')
+    ->header('Content-Type', 'text/html');
+$result = $voltTest->run(true);`}</pre>
+                    <p className="mb-2 font-semibold text-blue-500">3. Run your test suite:</p>
+                    <pre className="text-blue-800 bg-white p-2 rounded overflow-x-auto">{`php test.php`}</pre>
+                </div>
+                <a
+                    href="https://php.volt-test.com/docs/getting-started"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-6 bg-blue-500 text-white px-8 py-3 rounded-xl text-lg font-bold shadow hover:bg-blue-400 transition"
+                >
+                    Read Quickstart
+                </a>
+            </section>
+
+            {/* Community & Footer */}
+            <footer className="py-10 bg-white text-center border-t border-blue-100">
+                <div className="flex justify-center gap-6 mb-4">
+                    <a href="https://php.volt-test.com" className="hover:underline text-blue-500">Docs</a>
+                    <a href="https://github.com/volt-test/php-sdk" className="hover:underline text-blue-500">GitHub</a>
+                    <a href="https://x.com/vt_developers" className="hover:underline text-blue-500">Twitter</a>
+                    <a href="https://discord.com/invite/BvQD6bptaD" className="hover:underline text-blue-500">Discord</a>
+                </div>
+                <p className="text-sm text-blue-400">
+                    &copy; {new Date().getFullYear()} Volt-Test. Built by developers for developers.
+                </p>
             </footer>
-        </div>
+        </main>
     );
 }
 
-function FeatureCard({ icon, title, description, gradient }) {
+function Feature({ icon, title, description }) {
     return (
-        <div className={`p-8 rounded-xl bg-gradient-to-br ${gradient} border border-gray-700/50 hover:border-gray-600/50 transition-all`}>
-            <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                {icon}
-            </div>
-            <h3 className="text-xl font-semibold mb-3 text-white">{title}</h3>
-            <p className="text-gray-400">{description}</p>
+        <div className="bg-white rounded-2xl border border-blue-100 p-6 text-center shadow-xl">
+            <div className="flex justify-center mb-4">{icon}</div>
+            <h3 className="text-xl font-bold mb-2 text-blue-800">{title}</h3>
+            <p className="text-blue-700">{description}</p>
         </div>
     );
 }
