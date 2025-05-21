@@ -1,4 +1,4 @@
-// Volt-Test Landing Page with Blue & White Theme
+// Volt-Test Landing Page with Blue & White Theme + Advanced Features
 import logo from './img/volt-test-logo.png';
 import { Github, BookOpen, Zap } from 'lucide-react';
 
@@ -28,7 +28,7 @@ export default function LandingPage() {
                     </a>
                 </div>
                 <div className="rounded-2xl bg-white border border-blue-100 shadow-xl w-full max-w-2xl mx-auto p-6 mt-4">
-          <pre className="text-left text-sm md:text-base text-blue-800 bg-blue-50 rounded-xl p-4 overflow-x-auto">
+                    <pre className="text-left text-sm md:text-base text-blue-800 bg-blue-50 rounded-xl p-4 overflow-x-auto">
 {`$voltTest = (new VoltTest('Name of Your test'))
 ->setVirtualUsers(10);
 $scenario = $voltTest->scenario('Basic Scenario');
@@ -36,7 +36,7 @@ $scenario->step('Register')
     ->get('https://your-app.test')
     ->header('Content-Type', 'text/html');
 $result = $voltTest->run(true);`}
-          </pre>
+                    </pre>
                 </div>
             </section>
 
@@ -58,6 +58,41 @@ $result = $voltTest->run(true);`}
                         title="Open Source"
                         description="MIT licensed. Built for the community. Integrates easily into your workflow."
                     />
+                </div>
+            </section>
+
+            {/* Advanced Features */}
+            <section className="py-16 bg-white border-t border-blue-100">
+                <div className="max-w-5xl mx-auto px-4">
+                    <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-8 text-center">
+                        Advanced Features
+                    </h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <FeatureItem
+                            title="Multiple Scenario Support with Weights"
+                            description="Run different test scenarios in a single test suite, each with custom weight distributions to simulate real-world traffic patterns."
+                        />
+                        <FeatureItem
+                            title="Data Provider for Virtual Users"
+                            description="Assign dynamic, realistic data to each virtual user for more authentic and robust test simulations."
+                        />
+                        <FeatureItem
+                            title="Extract Data from Requests"
+                            description="Capture data from responses and reuse it in subsequent requests for chained and dependent testing."
+                        />
+                        <FeatureItem
+                            title="Request Customization & Response Validation"
+                            description="Modify headers, payloads, and easily assert results for flexible, end-to-end testing."
+                        />
+                        <FeatureItem
+                            title="Think Time & Ramp-Up Configuration"
+                            description="Simulate real-user behavior by controlling delays between requests and gradual load increases."
+                        />
+                        <FeatureItem
+                            title="Debug Requests"
+                            description="Inspect and troubleshoot each request and response with built-in debugging tools."
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -93,7 +128,7 @@ $result = $voltTest->run(true);`}</pre>
 
             {/* Community & Footer */}
             <footer className="py-10 bg-white text-center border-t border-blue-100">
-                <div className="flex justify-center gap-6 mb-4">
+                <div className="flex justify-center gap-6 mb-4 flex-wrap">
                     <a href="https://php.volt-test.com" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">Docs</a>
                     <a href="https://github.com/volt-test/php-sdk" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">GitHub</a>
                     <a href="https://x.com/vt_developers" target="_blank" className="hover:underline text-blue-500" rel="noreferrer">X(twitter)</a>
@@ -113,6 +148,15 @@ function Feature({ icon, title, description }) {
             <div className="flex justify-center mb-4">{icon}</div>
             <h3 className="text-xl font-bold mb-2 text-blue-800">{title}</h3>
             <p className="text-blue-700">{description}</p>
+        </div>
+    );
+}
+
+function FeatureItem({ title, description }) {
+    return (
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-5">
+            <h3 className="text-lg font-semibold text-blue-700 mb-2">{title}</h3>
+            <p className="text-blue-900 text-base">{description}</p>
         </div>
     );
 }
