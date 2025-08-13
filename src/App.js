@@ -242,7 +242,7 @@ function WaitlistForm() {
             });
 
             if (res.ok) {
-                setStatus('success');
+                setStatus('success'); // success
                 setEmail('');
                 setCompany('');
                 setToken('');
