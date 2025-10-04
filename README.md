@@ -2,6 +2,25 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
+## Environment Variables
+
+To enable Cloudflare Turnstile on the Early Access form, create a local `.env` file (never commit it) based on `.env.example`.
+
+1. Copy the example file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Replace the placeholder site key with your Cloudflare Turnstile public (site) key:
+   ```bash
+   REACT_APP_TURNSTILE_SITE_KEY=0x4AAAAAABrXUaAkT2Oipilm
+   ```
+3. Restart the dev server if it's running (`npm start`).
+
+Notes:
+- Only variables prefixed with `REACT_APP_` are exposed to the browser by Create React App.
+- The Turnstile public site key is safe to expose; keep the secret key on the server side only.
+- If the env variable is missing, the form will show a small warning and disable Turnstile enforcement.
+
 ## Available Scripts
 
 In the project directory, you can run: 
