@@ -20,6 +20,15 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Create .env from repo vars/secrets
+        run: |
+          {
+            echo "REACT_APP_TURNSTILE_SITE_KEY=${{ vars.REACT_APP_TURNSTILE_SITE_KEY }}";
+            echo "REACT_APP_PH_PROJECT_API_KEY=${{ secrets.REACT_APP_PH_PROJECT_API_KEY }}";
+            echo "REACT_APP_ENABLE_ANALYTICS=${{ vars.REACT_APP_ENABLE_ANALYTICS || 'true' }}";
+          } > .env
+          echo ".env created (contents hidden)."
+
       - name: Install Dependencies
         run: npm install
 

@@ -7,9 +7,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from './img/volt-test-logo.png';
 import { Github, BookOpen, Zap, Mail, CheckCircle2 } from 'lucide-react';
+import posthog from 'posthog-js';
 
 
-const SUBMIT_URL = 'https://formspree.io/f/mkgzewed'; // Vercel
+const TURNSTILE_SITE_KEY = process.env.REACT_APP_TURNSTILE_SITE_KEY || '';
+const PH_PROJECT_API_KEY = process.env.REACT_APP_PH_PROJECT_API_KEY || '';
+const ENABLE_ANALYTICS = (process.env.REACT_APP_ENABLE_ANALYTICS || 'true').toLowerCase() !== 'false';
+
+// Initialize PostHog only once (guards against double-init in dev HMR)
+if (PH_PROJECT_API_KEY && ENABLE_ANALYTICS && !window.__POSTHOG_INIT) {
+    posthog.init(PH_PROJECT_API_KEY, {
+        api_host: 'https://eu.i.posthog.com',
+        capture_pageview: true,
+        autocapture: true,
+    });
+    window.__POSTHOG_INIT = true; // flag
+} else if (!PH_PROJECT_API_KEY && ENABLE_ANALYTICS) {
+    // eslint-disable-next-line no-console
+    console.warn('[PostHog] REACT_APP_PH_PROJECT_API_KEY missing – analytics disabled');
+}
+
+const SUBMIT_URL = 'https://formspree.io/f/mkgzewed';
 
 export default function LandingPage() {
     return (
@@ -202,89 +220,91 @@ function WaitlistForm() {
     const [status, setStatus] = useState('idle'); // idle | loading | success | error
     const [hp, setHp] = useState(''); // honeypot
 
-    // --- Turnstile bits ---
+    // Turnstile state
     const [token, setToken] = useState('');
     const widgetRef = useRef(null);
 
     useEffect(() => {
-        // Render widget when script is ready
         const t = window.turnstile;
+        if (!TURNSTILE_SITE_KEY) return; // no site key configured
         if (!t || !widgetRef.current) return;
         const id = t.render(widgetRef.current, {
-            sitekey: "0x4AAAAAABrXUaAkT2Oipilm", // put your site key in .env
+            sitekey: TURNSTILE_SITE_KEY,
             theme: 'auto',
             callback: (tok) => setToken(tok),
             'expired-callback': () => setToken(''),
             'error-callback': () => setToken(''),
         });
-        return () => {
-            try { window.turnstile?.remove(id); } catch {}
-        };
+        return () => { try { window.turnstile?.remove(id); } catch {} };
     }, []);
+
+    const resetTurnstile = () => {
+        try { window.turnstile?.reset(widgetRef.current); } catch {}
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (status === 'loading') return;
         if (hp) return; // bot
-        if (!token) { setStatus('no-captcha'); return; } // no captcha
+        if (!email) { setStatus('error'); return; }
+        if (TURNSTILE_SITE_KEY && !token) { setStatus('error'); return; }
 
         setStatus('loading');
         try {
             const res = await fetch(SUBMIT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
                     email,
                     company,
-                    source: 'volt-test.com',
-                    list: 'early-access',
-                    token,
-                }),
+                    source: 'landing-page',
+                    turnstile_token: token,
+                })
             });
-
-            if (res.ok) {
-                setStatus('success'); // success
-                setEmail('');
-                setCompany('');
-                setToken('');
-                // Reset the widget so it can be used again
-                try { window.turnstile?.reset(widgetRef.current); } catch {}
-            } else {
-                setStatus('error');
-            }
-        } catch {
+            if (!res.ok) throw new Error('Request failed');
+            // capture analytics BEFORE clearing state (only non-PII details)
+            try {
+                if (PH_PROJECT_API_KEY && ENABLE_ANALYTICS && posthog?.capture) {
+                    const domain = (email.split('@')[1] || '').toLowerCase();
+                    posthog.capture('waitlist_submitted', {
+                        email_domain: domain || null,
+                        has_company: !!company,
+                    });
+                }
+            } catch {}
+            setStatus('success');
+            setEmail('');
+            setCompany('');
+            resetTurnstile();
+            setToken('');
+        } catch (err) {
             setStatus('error');
+            resetTurnstile();
         }
     };
 
+    if (status === 'success') {
+        return (
+            <div className="flex flex-col items-center text-center">
+                <CheckCircle2 className="h-12 w-12 text-green-500 mb-3" />
+                <p className="text-blue-800 font-semibold mb-1">You're on the list!</p>
+                <p className="text-sm text-blue-600">We'll reach out as soon as Volt-Test Cloud early access opens.</p>
+                <button
+                    type="button"
+                    onClick={() => setStatus('idle')}
+                    className="mt-4 text-sm text-blue-500 underline hover:text-blue-600"
+                >Add another email</button>
+            </div>
+        );
+    }
+
+    const disableSubmit = status === 'loading' || !email || (TURNSTILE_SITE_KEY && !token);
+
     return (
-        <form onSubmit={onSubmit} className="grid gap-3">
-            <label htmlFor="email" className="sr-only">Email</label>
-            <input
-                id="email"
-                type="email"
-                required
-                placeholder="you@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-blue-200 bg-blue-50 focus:bg-white focus:border-blue-400 px-4 py-3 outline-none"
-                autoComplete="email"
-            />
-
-            <label htmlFor="company" className="sr-only">Company (optional)</label>
-            <input
-                id="company"
-                type="text"
-                placeholder="Company / Team (optional)"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                className="w-full rounded-xl border border-blue-200 bg-blue-50 focus:bg-white focus:border-blue-400 px-4 py-3 outline-none"
-                autoComplete="organization"
-            />
-
-            {/* Honeypot field */}
+        <form onSubmit={onSubmit} className="space-y-4" noValidate>
+            {/* Honeypot */}
             <input
                 type="text"
-                name="_gotcha"
                 value={hp}
                 onChange={(e) => setHp(e.target.value)}
                 className="hidden"
@@ -292,33 +312,56 @@ function WaitlistForm() {
                 autoComplete="off"
             />
 
-            {/* Turnstile widget */}
-            <div ref={widgetRef} className="cf-turnstile my-2" />
+            <div>
+                <label htmlFor="email" className="block text-sm font-medium text-blue-700 mb-1">Email *</label>
+                <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    className="w-full border border-blue-200 rounded-lg px-4 py-2.5 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-blue-900 placeholder-blue-400"
+                />
+            </div>
 
-            <button
-                type="submit"
-                disabled={status === 'loading'}
-                className="mt-2 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg font-bold shadow hover:bg-blue-500 transition flex items-center justify-center gap-2 disabled:opacity-60"
-            >
-                {status === 'loading' ? 'Joining…' : <>Join Early Access <Mail className="h-5 w-5" /></>}
-            </button>
+            <div>
+                <label htmlFor="company" className="block text-sm font-medium text-blue-700 mb-1">Company / Project (optional)</label>
+                <input
+                    id="company"
+                    type="text"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="Acme Inc"
+                    className="w-full border border-blue-200 rounded-lg px-4 py-2.5 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-blue-900 placeholder-blue-400"
+                />
+            </div>
 
-            {status === 'success' && (
-                <div className="flex items-start gap-2 text-green-700 bg-green-50 border border-green-200 rounded-xl px-3 py-2 mt-2">
-                    <CheckCircle2 className="h-5 w-5 mt-0.5" />
-                    <p className="text-sm">Thanks! Please check your inbox to confirm your spot.</p>
-                </div>
-            )}
+            <div>
+                <label className="block text-sm font-medium text-blue-700 mb-1">Security Check</label>
+                {TURNSTILE_SITE_KEY ? (
+                    <div ref={widgetRef} className="cf-turnstile" />
+                ) : (
+                    <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded px-2 py-1 inline-block">
+                        Missing REACT_APP_TURNSTILE_SITE_KEY env variable.
+                    </p>
+                )}
+            </div>
+
             {status === 'error' && (
-                <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2 mt-2">
-                    Something went wrong. Please try again.
-                </p>
+                <p className="text-sm text-red-600">Something went wrong. Please check fields and try again.</p>
             )}
-            {status === 'no-captcha' && (
-                <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2 mt-2">
-                    Please complete the CAPTCHA to join the waitlist.
-                </p>
-            )}
+
+            <div>
+                <button
+                    type="submit"
+                    disabled={disableSubmit}
+                    className={`w-full flex justify-center items-center gap-2 font-semibold rounded-lg px-6 py-3 transition text-white shadow-md ${disableSubmit ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'}`}
+                >
+                    {status === 'loading' ? 'Submitting…' : 'Join Early Access'}
+                </button>
+            </div>
+            <p className="text-[10px] text-blue-400 text-center">Protected by Cloudflare Turnstile.</p>
         </form>
     );
 }
