@@ -29,7 +29,13 @@
 
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>
+    window.onTurnstileLoad = function() {
+      window.turnstileReady = true;
+      window.dispatchEvent(new Event('turnstile-ready'));
+    };
+  </script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
 
   <!--
         manifest.json provides metadata used when your web app is installed on a
