@@ -639,12 +639,45 @@ function WaitlistForm() {
 
     // Turnstile state
     const [token, setToken] = useState('');
+    const [turnstileLoaded, setTurnstileLoaded] = useState(false);
     const widgetRef = useRef(null);
 
+    // Wait for Turnstile script to load
     useEffect(() => {
+        if (!TURNSTILE_SITE_KEY) return;
+
+        // Check if already loaded
+        if (window.turnstileReady || window.turnstile) {
+            setTurnstileLoaded(true);
+            return;
+        }
+
+        // Listen for the load event
+        const handleTurnstileReady = () => {
+            setTurnstileLoaded(true);
+        };
+
+        window.addEventListener('turnstile-ready', handleTurnstileReady);
+
+        // Fallback: poll for turnstile object in case event was missed
+        const checkInterval = setInterval(() => {
+            if (window.turnstile) {
+                setTurnstileLoaded(true);
+                clearInterval(checkInterval);
+            }
+        }, 100);
+
+        return () => {
+            window.removeEventListener('turnstile-ready', handleTurnstileReady);
+            clearInterval(checkInterval);
+        };
+    }, []);
+
+    // Render Turnstile widget once script is loaded
+    useEffect(() => {
+        if (!TURNSTILE_SITE_KEY || !turnstileLoaded || !widgetRef.current) return;
+
         const t = window.turnstile;
-        if (!TURNSTILE_SITE_KEY) return; // no site key configured
-        if (!t || !widgetRef.current) return;
         const id = t.render(widgetRef.current, {
             sitekey: TURNSTILE_SITE_KEY,
             theme: 'light',
@@ -653,7 +686,7 @@ function WaitlistForm() {
             'error-callback': () => setToken(''),
         });
         return () => { try { window.turnstile?.remove(id); } catch { } };
-    }, []);
+    }, [turnstileLoaded]);
 
     const resetTurnstile = () => {
         try { window.turnstile?.reset(widgetRef.current); } catch { }
