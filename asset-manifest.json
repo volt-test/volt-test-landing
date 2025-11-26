@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.b14d42a0.css",
-    "main.js": "/static/js/main.2160405e.js",
+    "main.js": "/static/js/main.f913e179.js",
     "static/media/volt-test-logo.png": "/static/media/volt-test-logo.6fb0fdc099e045af6133.png",
     "index.html": "/index.html",
     "main.b14d42a0.css.map": "/static/css/main.b14d42a0.css.map",
-    "main.2160405e.js.map": "/static/js/main.2160405e.js.map"
+    "main.f913e179.js.map": "/static/js/main.f913e179.js.map"
   },
   "entrypoints": [
     "static/css/main.b14d42a0.css",
-    "static/js/main.2160405e.js"
+    "static/js/main.f913e179.js"
   ]
 }
